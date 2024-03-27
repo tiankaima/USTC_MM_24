@@ -1,0 +1,4 @@
+[submodule "HW2/Eigen"]
+	path = HW2/Eigen
+	url = https://gitlab.com/libeigen/eigen.git
+	branch = v3.4.0
