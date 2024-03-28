@@ -30,7 +30,6 @@ int main(int argc, char **argv) {
 
     // parse quality into int
     int quality = std::stoi(argv[3]);
-    std::cout << quality << std::endl;
 
     // load into a Matrix:
     Eigen::MatrixXd img_matrix(height, width * channels);
@@ -41,7 +40,8 @@ int main(int argc, char **argv) {
     }
 
     // SVD:
-    Eigen::JacobiSVD<Eigen::MatrixXd> svd(img_matrix, Eigen::ComputeThinU | Eigen::ComputeThinV);
+    Eigen::JacobiSVD<Eigen::MatrixXd, Eigen::ComputeThinU> svd(img_matrix);
+    std::cout << "SVD done" << std::endl;
 
     Eigen::MatrixXd U = svd.matrixU();
     Eigen::MatrixXd V = svd.matrixV();
@@ -52,10 +52,10 @@ int main(int argc, char **argv) {
     Eigen::MatrixXd img_matrix_compressed = U.leftCols(k) * S.head(k).asDiagonal() * V.leftCols(k).transpose();
 
     // save image:
-    unsigned char *img_compressed = new unsigned char[height * width * channels];
+    auto *img_compressed = new unsigned char[height * width * channels];
     for (int i = 0; i < height; i++) {
         for (int j = 0; j < width * channels; j++) {
-            img_compressed[i * width * channels + j] = img_matrix_compressed(i, j);
+            img_compressed[i * width * channels + j] = (unsigned char) img_matrix_compressed(i, j);
         }
     }
     stbi_write_png(argv[2], width, height, channels, img_compressed, width * channels);
