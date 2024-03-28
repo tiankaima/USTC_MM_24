@@ -1,4 +1,4 @@
-#set text(font: ("New Computer Modern", "Source Han Serif SC"))
+#set text(font: ("New Computer Modern", "Source Han Serif"))
 #set page(margin: 1.0in)
 #show par: set block(spacing: 1.0em)
 #show heading.where(level: 2): it => [
@@ -112,19 +112,19 @@ $ x = U xi, quad y = V eta $
 
 SVD 分解定理给出了上述分解的存在性:
 
-#text(fill: olive)[
+#box(stroke: red, inset: 10pt, width: 100%)[
 设 $A in RR^(m times n)$, 则存在 $U in RR^(m times m), V in RR^(n times n)$ 是正交矩阵, $Sigma in RR^(m times n)$ 是对角矩阵, 使得:
 
 $
 U^T A V = mat(Sigma_r, 0; 0, 0)
 $ 其中 $Sigma_r = "diag"(s_1, s_2, ..., s_r)$, $s_1 >= s_2 >= ... >= s_r >= 0$
-]
 
 我们称 $s_1 >= ... >= s_r$ 为 $A$ 的奇异值, $U, V$ 的列向量为 $A$ 的左奇异向量和右奇异向量.
 
 则有 $
 A = U Sigma V^T = sum_(i=1)^r s_i u_i v_i^T = s_1 u_1 v_1^T + ... + s_r u_r v_r^T
 $
+]
 
 === 图像压缩 / Image Compression
 
@@ -151,37 +151,68 @@ $
 #box[
 === 灰度图像压缩 / Grayscale Image Compression
 #table(columns: (auto,auto,auto,auto,auto), align: center, [
-  #image("../code-py/input.png") Original],[
-  #image("../code-py/output/input-80.jpg") $k=80$],[
-  #image("../code-py/output/input-160.jpg") $k=160$],[
-  #image("../code-py/output/input-320.jpg") $k=320$],[
-  #image("../code-py/output/input-640.jpg")  $k=640$
+  #image("./code-py/input.png") Original],[
+  #image("./code-py/output/input-80.jpg") $k=80$],[
+  #image("./code-py/output/input-160.jpg") $k=160$],[
+  #image("./code-py/output/input-320.jpg") $k=320$],[
+  #image("./code-py/output/input-640.jpg")  $k=640$
 ])
 ]
 
 #box[
 === 彩色图像压缩 / Color Image Compression
 #table(columns: (auto,auto,auto,auto,auto), align: center, [
-  #image("../code-py/input_color.jpg") Original],[
-  #image("../code-py/output/input_color-80.jpg") $k=80$],[
-  #image("../code-py/output/input_color-160.jpg") $k=160$],[
-  #image("../code-py/output/input_color-320.jpg") $k=320$],[
-  #image("../code-py/output/input_color-640.jpg")  $k=640$
+  #image("./code-py/input_color.jpg") Original],[
+  #image("./code-py/output/input_color-80.jpg") $k=80$],[
+  #image("./code-py/output/input_color-160.jpg") $k=160$],[
+  #image("./code-py/output/input_color-320.jpg") $k=320$],[
+  #image("./code-py/output/input_color-640.jpg")  $k=640$
 ])
 ]
 
 #box[
 === 标准测试图像压缩 / Standard Test Image Compression
 #table(columns: (auto,auto,auto,auto), align: center, [
-  #image("../code-py/test.png") Original],[
-  #image("../code-py/output/test-2.jpg") $k=2$],[
-  #image("../code-py/output/test-4.jpg") $k=4$],[
-  #image("../code-py/output/test-8.jpg") $k=8$
+  #image("./code-py/test.png") Original],[
+  #image("./code-py/output/test-2.jpg") $k=2$],[
+  #image("./code-py/output/test-4.jpg") $k=4$],[
+  #image("./code-py/output/test-8.jpg") $k=8$
 ])
 ]
 
 #pagebreak()
 
 == 结论 / Conclusion
+
+SVD 图像压缩能实现图像压缩(并保留大部分图像细节), 主要得益于 SVD 分解的奇异值截断性质(如下图所示)，大部分图像信息集中在前几个奇异值上。
+
+#align(center)[
+#image("./code-py/output/input-sigma_distribution.png", width: 90%)
+]
+
+== 备注 / Remarks
+
+- 安装：
+```bash
+cd code-py
+python3 -m pip install -r requirements.txt
+```
+
+- 运行：
+
+  - 灰度：
+  ```bash
+  python3 main.py --input input.png --output output --k 80
+  ```
+
+  - 彩色：
+  ```bash
+  python3 main.py --input input_color.jpg --output output --k 80 -c
+  ```
+
+  - 导出奇异值分布图：
+  ```bash
+  python3 main.py --input input.png --output output --k 80 -e
+  ```
 
 // == 问题

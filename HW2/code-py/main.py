@@ -19,6 +19,7 @@ def svd_compress(image_path: str, output_folder: str, k: int, color: bool, expor
             plt.xlabel("Singular Value Index")
             plt.ylabel("Singular Value")
             plt.title("Singular Value Distribution")
+            plt.gca().ticklabel_format(style='sci', axis='y', scilimits=(0,0))
             filename = os.path.basename(image_path).split(".")[0]
             plt.savefig(os.path.join(output_folder, f"{filename}-sigma_distribution.png"))
             plt.close()
