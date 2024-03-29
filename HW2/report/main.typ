@@ -1,4 +1,4 @@
-#set text(font: ("New Computer Modern", "Source Han Serif"))
+#set text(font: ("New Computer Modern", "Source Han Serif", "Source Han Serif SC"))
 #set page(margin: 1.0in)
 #show par: set block(spacing: 1.0em)
 #show heading.where(level: 2): it => [
@@ -86,7 +86,7 @@ SVD 分解的目标是得到如下形式:
 
 $
 A = U Sigma V^T
-$ 其中 $U in F^(m times m), V in F^(n times n)$ 是正交矩阵($U U^T = I, V V^T = I$),
+$ 其中 $U in FF^(m times m), V in FF^(n times n)$ 是正交矩阵($U U^T = I, V V^T = I$),
 $Sigma in F^(m times n)$ 是主对角矩阵:
 $ Sigma_r = "diag"(s_1, s_2, ..., s_r) $
 // $ Sigma = display(mat(Sigma_r,0;0,0)) $
@@ -98,7 +98,7 @@ $ Sigma_r = "diag"(s_1, s_2, ..., s_r) $
 $
 f(x,y) = x^T A y
 $
-其中 $f: V times W -> K$, $V, W$是两个向量空间, $K$是数域.
+其中 $f: V times W -> FF$, $V in FF^m, K in FF^n$.
 
 考虑 $V, W$ 中各一组标准正交基 $U, V$(即 $U^T U = I, V^T V = I$), 任意 $x in V, y in W$ 可以表示为
 $ x = U xi, quad y = V eta $
@@ -136,7 +136,7 @@ $
 A_k = U Sigma_k V^T = sum_(i=1)^k s_i u_i v_i^T = s_1 u_1 v_1^T + ... + s_k u_k v_k^T
 $
 
-其中 $k < r$, $A_k$ 是 $A$ 的一个近似, $k$ 越小, 图像的压缩率越高.
+其中 $k < r$, $A_k$ 是 $A$ 的一个近似, $k$ 越小, 图像的压缩率越高, 损失的信息也就越多.
 
 对于彩色图像, 我们可以对每个通道分别进行 SVD 分解, 从而实现彩色图像的压缩.
 
