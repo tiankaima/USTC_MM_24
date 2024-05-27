@@ -178,3 +178,5 @@ pyrightconfig.json
 .idea/
 cmake-build-debug/
 cmake-build-release/
+
+*.blend1
