@@ -180,3 +180,4 @@ cmake-build-debug/
 cmake-build-release/
 
 *.blend1
+*.pdf
